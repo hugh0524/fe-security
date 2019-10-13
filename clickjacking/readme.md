@@ -13,5 +13,7 @@ node index.js
 
 
 ### 测试dropjacking, 需要在ie9以下或ff低版本下
-
+http-server ./ -p 8081
+http-server ./ -p 8082
+启动两个地址以测试不同源
 

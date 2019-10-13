@@ -5,6 +5,7 @@
 const express = require('express')
 var cookieParser = require('cookie-parser')
 const app = express()
+app.use('/static', express.static('./'))
 app.use(cookieParser())
 
 // app.use(function(req, res, next){
@@ -33,6 +34,14 @@ app.get('/cookie/read', function (req, res) {
    res.send("ok:" + req.cookies["test-cookie"])
 })
 
+app.get('/cookie/readWithToken', function (req, res) {
+    console.log(req.cookies)
+    if(req.cookies.jstoken) {
+        res.send("ok: 含有token:" + req.cookies.jstoken)
+    } else {
+        res.send("bad: 缺少验证token" )
+    }
+})
 
 
 app.listen(3000, () => console.log('Example app listening on port 3000!'))
