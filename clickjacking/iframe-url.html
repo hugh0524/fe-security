@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    测试不同域下,iframe 为指定url的 x-frame-option 头部
+</div>
+<div>
+   <button onclick="sameUrl(true)">指定url为当前域</button><button onclick="sameUrl(false)">指定url为非当前域</button>
+</div>
+<iframe id="iframe" src=""></iframe>
+
+<script>
+    function sameUrl (flag) {
+        var curHost = window.location.protocol+"//"+window.location.host
+        if(!flag){
+            curHost = "http://shangdai.yixin.com"
+        }
+        document.getElementById("iframe").src = `http://localhost:3000/url?url=${curHost}`
+    }
+</script>
+</body>
+</html>

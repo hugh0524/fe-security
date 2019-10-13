@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>DOM XSS</title>
+     <script src="../utils/encodeUtils.js"></script>
+</head>
+<body>
+<h3>
+    测试DOM XSS
+</h3>
+<div id= res>
+
+
+</div>
+
+<script>
+
+    var b = "\"/><img src=x onerror='alert(1)'><a \""
+    document.querySelector("#res").innerHTML = '<a href="'+window.xss_encode.htmlEncode(b)+'">测试encode</a>'
+    document.querySelector("#res").innerHTML = '<a href="'+b+'">测试</a>'
+
+</script>
+
+</body>
+</html>

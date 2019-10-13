@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>拖放劫持</title>
+    <style>
+        .source {
+            /*position: relative;*/
+            width: 30px;
+            height: 30px;
+        }
+        .drop-iframe {
+            opacity: .5;
+            width: 30px;
+            height: 30px;
+            /*position: relative;*/
+            z-index: 10;
+        }
+
+        .ball {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #00b3ee;
+            position: relative;
+        }
+
+        .target {
+            margin-top: 50px;
+            width: 100px;
+            height: 100px;
+            background: #eee;
+        }
+    </style>
+    <script>
+        function dragstart(ev)
+        {
+            console.log(ev)
+            ev.dataTransfer.setData("text/html",ev.target);
+//            ev.dataTransfer.setData("text/uri-list", "http://localhost:3000/static/dropIframe.html")
+//            ev.dataTransfer.setData("text/plain","123");
+            ev.dataTransfer.dropEffect = "move";
+//            console.log(ev)
+        }
+
+        function allowDrop (ev) {
+            ev.preventDefault()
+        }
+        function drop (ev) {
+            ev.preventDefault();
+            var data=ev.dataTransfer.getData("text/html");
+//            var data=ev.dataTransfer.getData("URL");
+            console.log(data)
+
+        }
+    </script>
+</head>
+<body>
+<div>ctrl+A 选择iframe, 拖拽即可到框中即可</div>
+<div class="target" ondragover="allowDrop(event)" ondrop="drop(event)" contenteditable="true">
+
+
+</div>
+
+<div class="source" >
+    <iframe src="http://192.168.1.4:8082/public/dropIframe.html" class="drop-iframe" draggable="true" ondragstart="dragstart(event)"></iframe>
+    <div class="ball" ></div>
+</div>
+
+
+
+</body>
+</html>

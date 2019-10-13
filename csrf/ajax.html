@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test cookie with credentials</title>
+</head>
+<body>
+
+<script>
+    /**
+     *
+     * @type {XMLHttpRequest}
+     */
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://127.0.0.1:3000/cookie/read', true);
+    xhr.withCredentials = true; // 控制是否带cookie
+    xhr.onreadystatechange = function() {
+        if(xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+           alert(xhr.responseText)
+        }
+    }
+    xhr.send(null);
+
+
+</script>
+
+</body>
+</html>

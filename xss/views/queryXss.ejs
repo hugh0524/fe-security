@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>
+    测试XSS
+</h3>
+<div>
+使用模板输出query, 会被浏览器阻止:  its source code was found within the request. The auditor was enabled as the server did not send an 'X-XSS-Protection' header.
+
+<br/>
+范例1: http://localhost:3000/queryXss?cont=alert(1)&123
+
+<br/>
+范例2: http://localhost:3000/queryXss?cont=< script >alert(1)< / script >&123
+<br/>
+范例3: http://localhost:3000/queryXss?cont=%3Cimg%20src=%27x%27%20onerror=%27alert(1)%27%20%3E&123
+
+<br/>
+<%- content %>
+
+
+</div>
+<br/>
+
+<script>
+
+
+</script>
+
+</body>
+</html>

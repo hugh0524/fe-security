@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>
+    测试XSS
+</h3>
+
+<br/>
+<p>HTML 5 中指定不执行由 innerHTML 插入的 script 标签。</p>
+范例2: http://localhost:3000/queryXss?cont=alert(1)&123
+<br/>
+<div id="xss">
+
+</div>
+
+<script>
+    function queryStringToObject (needHash, safeHtml) {
+          var search = document.location.search.replace(/(^\?)/,'');
+          if(search && search.lastIndexOf("/") == (search.length-1)){
+            search = search.substr(0, search.lastIndexOf("/"))
+          }
+          var searchObj = (!needHash?
+              (search) :
+              [~window.location.hash.lastIndexOf("?")? window.location.hash.substr(window.location.hash.indexOf("?")).replace(/(^\?)/,''):"", search].join("&")).split("&")
+              .filter(function(i){return i!=""})
+              .map(function(item){
+                var i = item.indexOf("=")
+               if(i<0){
+                this[item] = ""
+                 //return {[item]:""}
+               }else {
+                 this[item.substr(0, i)] = decodeURI(item.substr(i+1));
+               }
+               return this
+              }.bind({}))[0];
+
+             if(safeHtml && searchObj ){
+                    for(var so in searchObj) {
+                        if(so && searchObj[so]) {
+                            searchObj[so] = searchObj[so].replace( /</g, "& lt;").replace(/>/g, "& gt;"); // !! 参照注意点
+                        }
+                    }
+                }
+
+          return searchObj || {};
+    }
+
+
+
+   var queries = queryStringToObject(false, false)
+   console.log(queries)
+
+
+  // document.getElementById("xss").innerHTML = `<img src='x' onerror='${queries.cont}' >`
+   document.getElementById("xss").innerHTML = `${queries.cont}`
+
+</script>
+
+</body>
+</html>
