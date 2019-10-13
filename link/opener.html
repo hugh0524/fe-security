@@ -11,7 +11,7 @@
 </div>
 
 <script>
-    console.log(window.opener)
+    alert("访问opener")
     if(window.opener) {
         if(window.opener.document) {
             window.opener.document.getElementById("hacking").innerHTML = '哈哈哈哈, 你被hack啦'

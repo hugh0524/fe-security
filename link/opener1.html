@@ -11,10 +11,10 @@
 </div>
 
 <script>
-    alert("访问opener2")
+    alert("访问opener1")
     if(window.opener) {
-        if(window.opener.location) {
-            window.opener.location = "http://127.0.0.1:8081/hack.html"
+       if(window.opener.location) {
+            window.opener.location = "./hack.html"
         } else {
             alert("没有合适的opener属性")
         }

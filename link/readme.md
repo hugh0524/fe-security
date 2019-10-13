@@ -4,5 +4,7 @@
 
 ## 使用
 
-http-server .
+http-server . -p 8081
 启动一个服务
+
+访问 index.html
