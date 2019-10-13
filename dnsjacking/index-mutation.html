@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script>
+        var MutationObserver = window.MutationObserver || window.WebKitMutationObserver ||  window.MozMutationObserver;
+        var whiteListForCSP = [
+            'http(s)?:\/\/127.0.0.1:8081'
+        ]
+
+        // Mutation 观察者对象能监听在某个范围内的 DOM 树变化
+        if(MutationObserver) {
+            var observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    // 返回被添加的节点,或者为null.
+                    var nodes = mutation.addedNodes;
+                    for (var i = 0; i < nodes.length; i++) {
+                        var node = nodes[i];
+                        var tagName = node.tagName && node.tagName.toLowerCase()
+                        if ((tagName === "script" || tagName === "iframe" || tagName === "img" || tagName === "link") && node.src && (node.src.indexOf(window.location.protocol+"://"+window.location.hostname) !=0 && !new RegExp("^("+whiteListForCSP.join(")|(")+")").test(node.src))) {
+                            try {
+                                node.parentNode.removeChild(node);
+                                console.log('拦截非白名单文件:', node.src);
+                            } catch (e) {}
+                        }
+                    }
+                })
+            })
+        }
+        // 传入目标节点和观察选项
+        observer.observe(document, {
+            subtree: true,
+            childList: true
+        });
+
+    </script>
+    <script src="http://127.0.0.1:8082/js/attack1.js"></script>
+</head>
+<body>
+aaa
+这是我的主页
+</body>
+</html>

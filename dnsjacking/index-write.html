@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script>
+        var _write = document.write,
+            _white_list = {
+                '127.0.0.1:8081': 1,
+            },
+
+            _RE_SCRIPTS = /<(script|img|iframe).*?src\=["']?([^"'\s>]+)/ig,
+            _RE_DOMAIN = /(.+?)\.([^\/]+).+/;
+
+        function sendTJ() {
+            console.log("被攻击啦:",arguments)
+        }
+        document.write = function(str) {
+            try {
+                var s, safes = [], unknows = [];
+                console.log(_RE_SCRIPTS)
+                while(s = _RE_SCRIPTS.exec(str)) {
+                    console.log(s)
+                    if(_white_list[(_RE_DOMAIN.exec(s) || [])[2]]) {
+                        safes.push(s);
+                    } else {
+                        unknows.push(s);
+                    }
+                }
+                if(unknows.length > 0) {
+                    sendTJ([unknows[0], safes[0] || ""].join("~_~"), location.href);
+                }
+                try {
+                    _write.call(this, str);
+                } catch(ex) {
+                    _write(str);
+                }
+            } catch(ex) {
+                sendTJ(ex.name + ":" + ex.message, location.href);
+            }
+        };
+
+    </script>
+    <script src="http://127.0.0.1:8082/js/attack1.js"></script>
+</head>
+<body>
+aaa
+ 这是我的主页
+</body>
+</html>
