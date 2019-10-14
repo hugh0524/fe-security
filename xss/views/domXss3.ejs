@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>DOM XSS</title>
+     <script src="../utils/encodeUtils.js"></script>
+
+     <script src="../assets/jquery-1.8.3.min.js"></script>
+</head>
+<body>
+<h3>
+    LEVEL-3 <a href="/domXss/4" >next level</a>
+</h3>
+<div>
+<p>目标: 显示出alert</p>
+<p>状态: 采用模板渲染script部分代码, 请修改query参数的值</p>
+</div>
+
+
+<div id= res>
+
+
+</div>
+
+<script>
+
+var a = "<%- content %>"
+
+document.querySelector("#res").innerHTML = a
+</script>
+
+<div>
+案例:
+xss案例<br/>
+http://localhost:3000/domXss/3?cont=%22;alert(1)//
+<br/>
+防xss案例<br/>
+http://localhost:3000/domXss/3?encode=js&cont=";alert(1)//
+
+</div>
+
+</body>
+</html>

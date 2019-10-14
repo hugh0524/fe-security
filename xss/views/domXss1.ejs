@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>DOM XSS</title>
+     <script src="../utils/encodeUtils.js"></script>
+
+     <script src="../assets/jquery-1.8.3.min.js"></script>
+</head>
+<body>
+<h3>
+    LEVEL-1 <a href="/domXss/2" >next level</a>
+</h3>
+<div>
+<p>目标: 显示出alert</p>
+<p>状态: 页面直接将内容输出到html内, 无转义,无编码</p>
+</div>
+
+<input id="xss1" >
+<button onclick="showInfo()">提交</button>
+<button onclick="showInfoJquery()">提交-jquery</button>
+
+<div id= res>
+
+
+</div>
+
+<script>
+
+function showInfo() {
+    console.log(document.querySelector("#xss1").value)
+    try{
+        document.querySelector("#res").innerHTML = document.querySelector("#xss1").value
+    }catch(e){
+        window.eval(document.querySelector("#xss1").value.replace(/<(\/)*script>/g, ""))
+    }
+
+}
+
+function showInfoJquery() {
+    $('#res').html(document.querySelector("#xss1").value)
+}
+
+
+</script>
+
+<div>
+案例:
+<script>alert(1)</script>
+<br/>
+<img src=1 onerror=alert(1) />
+</div>
+
+</body>
+</html>

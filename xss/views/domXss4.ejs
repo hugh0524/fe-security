@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>DOM XSS</title>
+     <script src="../utils/encodeUtils.js"></script>
+
+     <script src="../assets/jquery-1.8.3.min.js"></script>
+</head>
+<body>
+<h3>
+    LEVEL-4 <a href="/domXss/4" >next level</a>
+</h3>
+<div>
+<p>目标: 显示出alert</p>
+<p>状态: 采用js读取query 渲染html标签部分代码, 请修改query参数的值</p>
+</div>
+
+<a href="#" id="a"></a>
+<div id= res>
+
+
+</div>
+
+<script>
+
+// 触发X-XSS-Protection
+//
+
+
+    function queryStringToObject (needHash, safeHtml) {
+          var search = document.location.search.replace(/(^\?)/,'');
+          if(search && search.lastIndexOf("/") == (search.length-1)){
+            search = search.substr(0, search.lastIndexOf("/"))
+          }
+          var searchObj = (!needHash?
+              (search) :
+              [~window.location.hash.lastIndexOf("?")? window.location.hash.substr(window.location.hash.indexOf("?")).replace(/(^\?)/,''):"", search].join("&")).split("&")
+              .filter(function(i){return i!=""})
+              .map(function(item){
+                var i = item.indexOf("=")
+               if(i<0){
+                this[item] = ""
+                 //return {[item]:""}
+               }else {
+                 this[item.substr(0, i)] = decodeURI(item.substr(i+1));
+               }
+               return this
+              }.bind({}))[0];
+
+             if(safeHtml && searchObj ){
+                    for(var so in searchObj) {
+                        if(so && searchObj[so]) {
+                            searchObj[so] = searchObj[so].replace( /</g, "& lt;").replace(/>/g, "& gt;"); // !! 参照注意点
+                        }
+                    }
+                }
+
+          return searchObj || {};
+    }
+
+
+
+   var queries = queryStringToObject(false, false)
+   console.log(queries)
+   var cont= queries.cont
+   if(queries.encode=="html"){
+    cont = window.xss_encode.htmlEncode(cont)
+   }
+
+   document.getElementById("res").innerHTML = `${cont}`
+
+</script>
+
+<div>
+案例:
+http://localhost:3000/domXss/4?cont=<img%20src=1%20onerror=alert(1)%20/>&123
+
+<br/>
+http://localhost:3000/domXss/4?cont=%3Cimg%20src=1%20onerror=alert(1)%20/%3E&encode=html
+</div>
+
+</body>
+</html>
