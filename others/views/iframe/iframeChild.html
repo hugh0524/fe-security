@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/csp.js"></script>
+</head>
+<body>
+
+<div>
+    这是子页面
+    <noscript>😯,无法执行script</noscript>
+    <br/>
+    <script>
+        document.write("<br/>"+"referrer:" + document.referrer)
+
+        try{
+            document.write("<br/>"+window.parent.document.querySelector("h1").html() )
+        }catch(e){
+            document.write("<br/>"+"ERROR:" + e.message)
+        }
+
+    </script>
+
+</div>
+<div id="res"></div>
+
+</body>
+</html>

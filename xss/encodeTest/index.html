@@ -9,7 +9,7 @@
 <h2>HTML ENCODE</h2>
 <h3>html内JS执行对应编码后的数据 (html自动解码)</h3>
 <input type="button" id="btn1" value="执行编码&lt; ✔️" onclick="x=&#39;&lt;img src=@ onerror=alert(123) /&gt;&#39;;alert(x);document.write(x)"><br/>
-<input type="button" id="btn2" value="执行编码 空格 ✘" onclick="x=&#39;&lt;img src=&quot;@&quot; onerror=&quot;alert(123)&quot;&nbsp;/&gt;&#39;;alert(x);document.write(x)"><br/>
+<input type="button" id="btn2" value="执行编码 空格 ✘" onclick="x=&#39;&lt;img&nbsp;src=&quot;@&quot;&nbsp;onerror=&quot;alert(123)&quot;&nbsp;/&gt;&#39;;alert(x);document.write(x)"><br/>
 <input type="button" id="btn3" value="执行无编码✔️" onclick="x='<img src=@ onerror=alert(123) />';alert(x);document.write(x)"><br/>
 <input type="button" id="btn4" value="执行完全html代码 ✔️" onclick="x='&lt;&#x69;&#x6d;&#x67;&#x20;&#x73;&#x72;&#x63;&#x3d;&#x40;&#x20;&#x6f;&#x6e;&#x65;&#x72;&#x72;&#x6f;&#x72;&#x3d;&#x61;&#x6c;&#x65;&#x72;&#x74;&#x28;&#x31;&#x32;&#x33;&#x29;&gt;';alert(123);document.write(x)"><br/>
 <input type="button" id="btn5" value="执行特殊字符编码 ✘" onclick="x='&lt;img&nbsp;src=@&nbsp;onerror=alert(123)&gt;';alert(x);document.write(x)"><br/>

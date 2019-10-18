@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div>
+    <h1>这是父页面</h1>
+    <div style="display: flex; flex-wrap:wrap">
+        <div>
+            <h3>无限制条件</h3>
+        <iframe src="http://localhost:8082/views/iframe/iframeChild.html" >
+
+        </iframe>
+        </div>
+
+        <div>
+            <h3>限制referrer为 no-referrer</h3>
+            <iframe referrerpolicy="no-referrer" src="http://localhost:8082/views/iframe/iframeChild.html" >
+
+            </iframe>
+        </div>
+
+        <div>
+            <h3>限制referrer为 origin</h3>
+            <iframe referrerpolicy="origin" src="http://localhost:8082/views/iframe/iframeChild.html" >
+
+            </iframe>
+        </div>
+        <div>
+            <h3>限制referrer为 same-origin</h3>
+            <iframe referrerpolicy="same-origin" src="http://localhost:8082/views/iframe/iframeChild.html" >
+
+            </iframe>
+        </div>
+        <div>
+            <h3>限制referrer为 unsafe-url</h3>
+            <iframe referrerpolicy="unsafe-url" src="http://localhost:8082/views/iframe/iframeChild.html" >
+
+            </iframe>
+        </div>
+        <div>
+            <h3>设置为sandbox</h3>
+            <iframe sandbox src="http://localhost:8082/views/iframe/iframeChild.html" >
+
+            </iframe>
+        </div>
+        <div>
+            <h3>设置为sandbox, allow-scripts支持</h3>
+            <iframe sandbox="allow-scripts" src="http://localhost:8082/views/iframe/iframeChild.html" >
+
+            </iframe>
+        </div>
+        <div>
+            <h3>设置为sandbox, allow-same-origin支持</h3>
+            <iframe sandbox="allow-scripts allow-same-origin" src="http://localhost:8082/views/iframe/iframeChild.html" >
+
+            </iframe>
+        </div>
+        <div>
+            <h3>无 src, 设置为sandbox, allow-same-origin支持</h3>
+            <iframe id="allowOrigin" sandbox="allow-scripts allow-same-origin"  >
+
+            </iframe>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+    document.querySelector("#allowOrigin").contentDocument.body.innerHTML = '父级页面可以控制'
+</script>
+</body>
+</html>
