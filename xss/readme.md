@@ -21,4 +21,9 @@
 - 访问特定页面
 
 
+## xss 案例访问
+localhost:3000/domXss/1
 
+
+## encodeTest
+测试 html js 自解码

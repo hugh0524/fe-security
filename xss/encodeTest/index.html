@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试编码效果</title>
+    <script src="../utils/encodeUtils.js"></script>
+</head>
+<body>
+<h2>HTML ENCODE</h2>
+<h3>html内JS执行对应编码后的数据 (html自动解码)</h3>
+<input type="button" id="btn1" value="执行编码&lt; ✔️" onclick="x=&#39;&lt;img src=@ onerror=alert(123) /&gt;&#39;;alert(x);document.write(x)"><br/>
+<input type="button" id="btn2" value="执行编码 空格 ✘" onclick="x=&#39;&lt;img src=&quot;@&quot; onerror=&quot;alert(123)&quot;&nbsp;/&gt;&#39;;alert(x);document.write(x)"><br/>
+<input type="button" id="btn3" value="执行无编码✔️" onclick="x='<img src=@ onerror=alert(123) />';alert(x);document.write(x)"><br/>
+<input type="button" id="btn4" value="执行完全html代码 ✔️" onclick="x='&lt;&#x69;&#x6d;&#x67;&#x20;&#x73;&#x72;&#x63;&#x3d;&#x40;&#x20;&#x6f;&#x6e;&#x65;&#x72;&#x72;&#x6f;&#x72;&#x3d;&#x61;&#x6c;&#x65;&#x72;&#x74;&#x28;&#x31;&#x32;&#x33;&#x29;&gt;';alert(123);document.write(x)"><br/>
+<input type="button" id="btn5" value="执行特殊字符编码 ✘" onclick="x='&lt;img&nbsp;src=@&nbsp;onerror=alert(123)&gt;';alert(x);document.write(x)"><br/>
+<input type="button" id="btn6" value="执行node编码 ✔️" onclick="x='&lt;img src=@ onerror=alert(123)&gt;';alert(x);document.write(x)"><br/>
+<h3>html内JS执行时编码(无html解码)</h3>
+<input type="button" id="btn7" value="执行node编码 ✔️" onclick="x=xss_encode.htmlEncodeByNode('<img src=@ onerror=alert(123)>');alert(x);document.write(x)"><br/>
+
+<h3>JS执行对编码数据</h3>
+<div id="res">
+
+</div>
+
+<h2>JS ENCODE</h2>
+<h3></h3>
+<input type="button" id="btn8" value="执行js编码" />
+<input type="button" id="btn9" value="执行\编码 ✔️" onclick="x='\<img src=@ onerror=alert(123) /\>';alert(x);document.write(x)"><br/>
+
+<script>
+    var encodeImg = window.xss_encode.htmlEncode("<img src=@ onerror=alert(1)>")
+
+    var encodeImgSimple = window.xss_encode.htmlEncodeSimple("<img src=@ onerror=alert(2)>")
+
+    var encodeImgNode = window.xss_encode.htmlEncodeByNode("<img src=@ onerror=alert(3)>")
+    document.querySelector("#res").innerHTML = `完全编码:${encodeImg }<br/>特殊字符编码:${encodeImgSimple}<br/>NODE编码:${encodeImgNode}`
+    console.log("完全编码:"+ encodeImg)
+    console.log("特殊字符编码:"+ encodeImgSimple)
+    console.log("NODE编码:"+ encodeImgNode)
+
+
+
+    document.querySelector("#btn8").onclick=function() {
+//        document.write(xss_encode.javascriptEncode('<img src=@ onerror=alert(2)>'))
+        document.write('\<img src=@ onerror=alert(2)\>')
+        // 自解码
+        document.write('\x3C\x69\x6D\x67\x20\x73\x72\x63\x3D\x40\x20\x6F\x6E\x65\x72\x72\x6F\x72\x3D\x61\x6C\x65\x72\x74\x28\x32\x29\x3E')
+    }
+</script>
+
+
+</body>
+</html>
