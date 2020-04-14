@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div>
+    <div>
+    test: same-site (child), 初始化注入了以下几个cookie
+
+    </div>
+    <hr/>
+
+
+
+        <img src = "/samesite3" />
+
+    <form method="get" action="/samesite/form?q=child1">
+        <button type="submit">提交</button>
+    </form>
+    <a href="/samesite/link?q=child1">测试连接</a>
+</div>
+
+</body>
+</html>

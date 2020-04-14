@@ -43,5 +43,41 @@ app.get('/cookie/readWithToken', function (req, res) {
     }
 })
 
+app.get('/samesite1', function (req, res) {
+    res.cookie("test-cookie", "123")
+    res.render('samesite/parent', {})
+})
+
+app.get('/samesite2', function (req, res) {
+    res.cookie("test-cookie-child2", "12345", {maxAge: 1000 * 600})
+    res.cookie("test-cookie-child3", "12345", {maxAge: 1000 * 600, sameSite: "none"})
+    res.cookie("test-cookie-child4", "lax", {maxAge: 1000 * 600, sameSite: "lax"})
+    res.cookie("test-cookie-child5", "strict", {maxAge: 1000 * 600, sameSite: "strict"})
+    res.render('samesite/child1', {})
+})
+
+app.get('/samesite3', function (req, res) {
+    res.cookie("test-cookie-child2", "12345", {maxAge: 1000 * 600})
+    res.cookie("test-cookie-child3", "12345", {maxAge: 1000 * 600, sameSite: "none"})
+    res.cookie("test-cookie-child4", "lax", {maxAge: 1000 * 600, sameSite: "lax"})
+    res.cookie("test-cookie-child5", "strict", {maxAge: 1000 * 600, sameSite: "strict"})
+    res.send("ok: 含有token:" + req.cookies["test-cookie-child2"])
+})
+
+app.get('/samesite/form', function (req, res) {
+    let page = req.query.q || "parent"
+    res.cookie(`${page}-cookie-form4`, "form-lax", {maxAge: 1000 * 600, sameSite: "lax"})
+    res.cookie(`${page}-cookie-form5`, "form-strict", {maxAge: 1000 * 600,sameSite: "strict"})
+    res.send("ok: 含cookie: "+ `${page}-cookie-form4, ${page}-cookie-form5`)
+})
+
+app.get('/samesite/link', function (req, res) {
+    let page = req.query.q || "parent"
+    res.cookie(`${page}-cookie-link4`, "link-lax", {maxAge: 1000 * 600, sameSite: "lax"})
+    res.cookie(`${page}-cookie-link5`, "link-strict", {maxAge: 1000 * 600, sameSite: "strict"})
+    res.send("ok: 含cookie: "+ `${page}-cookie-link4, ${page}-cookie-link5`)
+})
+
+
 
 app.listen(3000, () => console.log('Example app listening on port 3000!'))
